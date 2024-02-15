@@ -4,4 +4,4 @@ Get Disruptions es una aplicación web desarrollada utilizando Java y Spring Boo
 
 ---
 
-Puedes encontrar las últimas versiones en las [release notes]([URL_de_tu_release_notes]("https://alexscdev.notion.site/Release-Notes-409ea9cbbf864aa1ad569727545b8f1f)https://alexscdev.notion.site/Release-Notes-409ea9cbbf864aa1ad569727545b8f1f").
+Puedes encontrar las últimas versiones en las [release notes]("https://alexscdev.notion.site/Release-Notes-409ea9cbbf864aa1ad569727545b8f1f)https://alexscdev.notion.site/Release-Notes-409ea9cbbf864aa1ad569727545b8f1f").
