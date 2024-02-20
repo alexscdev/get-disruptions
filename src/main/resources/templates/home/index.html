@@ -4,74 +4,74 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
+
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-FZN1F6XJ5V"></script>
   <script>
-   window.dataLayer = window.dataLayer || [];
-   function gtag(){dataLayer.push(arguments);}
-   gtag('js', new Date());
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
 
-   gtag('config', 'G-FZN1F6XJ5V');
+    gtag('config', 'G-FZN1F6XJ5V');
   </script>
-  
+
   <!-- Read the Formbutton docs at formspree.io/formbutton/docs. See more examples at codepen.io/formspree -->
-<script src="https://formspree.io/js/formbutton-v1.min.js" defer></script>
-<script>
-  /* paste this line in verbatim */
-  window.formbutton=window.formbutton||function(){(formbutton.q=formbutton.q||[]).push(arguments)};
-  /* customize formbutton below*/     
-  formbutton("create", {
-    action: "https://formspree.io/f/mrgnpvky",
-    title: "Any suggestions?",
-    fields: [
-      { 
-        type: "email", 
-        label: "Email:", 
-        name: "email",
-        required: false,
-        placeholder: "your@email.com"
-      },
-      { 
-          type: "text", 
-          label: "Name:", 
+  <script src="https://formspree.io/js/formbutton-v1.min.js" defer></script>
+  <script>
+    /* paste this line in verbatim */
+    window.formbutton = window.formbutton || function () { (formbutton.q = formbutton.q || []).push(arguments) };
+    /* customize formbutton below*/
+    formbutton("create", {
+      action: "https://formspree.io/f/mrgnpvky",
+      title: "Any suggestions?",
+      fields: [
+        {
+          type: "email",
+          label: "Email:",
+          name: "email",
+          required: false,
+          placeholder: "your@email.com"
+        },
+        {
+          type: "text",
+          label: "Name:",
           name: "name",
           required: true,
           placeholder: "Alex"
         },
-      {
-        type: "textarea",
-        label: "Message:",
-        name: "message",
-        placeholder: "What's on your mind?",
-      },
-      { type: "submit" }      
-    ],
-    styles: {
-      title: {
-        backgroundColor: "gray"
-      },
-      button: {
-        backgroundColor: "gray"
+        {
+          type: "textarea",
+          label: "Message:",
+          name: "message",
+          placeholder: "What's on your mind?",
+        },
+        { type: "submit" }
+      ],
+      styles: {
+        title: {
+          backgroundColor: "gray"
+        },
+        button: {
+          backgroundColor: "gray"
+        }
       }
-    }
-  });
-</script>
-  
+    });
+  </script>
+
   <!-- Leaflet CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-  
+
   <!-- ===== Favicon ===== -->
   <link rel="icon" type="image/png" href="assets/img/favicon.png" />
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    
-    
- <!-- ===== CSS ===== -->
- <link rel="stylesheet" href="assets/css/styles.css" /> 
-  
-  
+
+
+  <!-- ===== CSS ===== -->
+  <link rel="stylesheet" href="assets/css/styles.css" />
+
+
   <title>Get Disruptions</title>
 </head>
 
@@ -81,7 +81,7 @@
     <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
       <div class="container-fluid">
         <a class="navbar-brand" href="/">
-        <img src="/assets/img/logo-app.png" alt="Logo" width="35" height="35" class="d-inline-block align-text-top">
+          <img src="/assets/img/logo-app.png" alt="Logo" width="35" height="35" class="d-inline-block align-text-top">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
           aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -92,100 +92,25 @@
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                 aria-expanded="false">
-                Disruptions List
+                Disruptions
               </a>
 
               <ul class="dropdown-menu">
-                
+                <th:block th:each="dato : ${datos}">
                   <li>
-                    <a class="dropdown-item" href="/7004549">Amsterdam - Haarlem.</a>
-                
+                    <a class="dropdown-item" th:href="@{/{id}(id=${dato.key})}" th:text="${dato.value}">ID</a>
+
                   </li>
-                
-                  <li>
-                    <a class="dropdown-item" href="/7004528">Den Haag - Rotterdam - Eindhoven.</a>
-                
-                  </li>
-                
-                  <li>
-                    <a class="dropdown-item" href="/6029078">Nijmegen-Venlo</a>
-                
-                  </li>
-                
-                  <li>
-                    <a class="dropdown-item" href="/7004500">Maastricht - Liège / Luik.</a>
-                
-                  </li>
-                
-                  <li>
-                    <a class="dropdown-item" href="/7004412">Amsterdam - Utrecht.</a>
-                
-                  </li>
-                
-                  <li>
-                    <a class="dropdown-item" href="/7004577">Amsterdam - Köln - Frankfurt; Amsterdam - München - Innsbruck.</a>
-                
-                  </li>
-                
-                  <li>
-                    <a class="dropdown-item" href="/7004569">Hoofddorp - Schiphol - Hilversum; Utrecht - Almere.</a>
-                
-                  </li>
-                
-                  <li>
-                    <a class="dropdown-item" href="/6028779">Almelo-Hardenberg</a>
-                
-                  </li>
-                
-                  <li>
-                    <a class="dropdown-item" href="/846c26b2-cc2e-4a9b-98b9-4ec87d40d70b">Werkzaamheden Zwolle-Deventer</a>
-                
-                  </li>
-                
-                  <li>
-                    <a class="dropdown-item" href="/7004521">Dordrecht - Gorinchem.</a>
-                
-                  </li>
-                
-                  <li>
-                    <a class="dropdown-item" href="/7004492">Groningen - Leer.</a>
-                
-                  </li>
-                
-                  <li>
-                    <a class="dropdown-item" href="/7004570">Schiphol - Lelystad.</a>
-                
-                  </li>
-                
-                  <li>
-                    <a class="dropdown-item" href="/7dc6113c-4159-41b8-8359-57030369c99a">Staking Frankrijk 15 tot 19 februari</a>
-                
-                  </li>
-                
-                  <li>
-                    <a class="dropdown-item" href="/6029076">&#39;s-Hertogenbosch-Eindhoven; Tilburg-Eindhoven</a>
-                
-                  </li>
-                
-                  <li>
-                    <a class="dropdown-item" href="/6029077">Utrecht-&#39;s-Hertogenbosch</a>
-                
-                  </li>
-                
-                  <li>
-                    <a class="dropdown-item" href="/7004409">Eindhoven - Roermond.</a>
-                
-                  </li>
-                
+                </th:block>
               </ul>
-              
             </li>
-            
+
           </ul>
-          <a class="navbar-brand" href="https://alexscdev.notion.site/Release-Notes-409ea9cbbf864aa1ad569727545b8f1f" target="_blank">
-        <button class="btn btn-sm btn-outline-secondary" type="button">Release Notes</button>
-        </a>
-          
+          <a class="navbar-brand" href="https://alexscdev.notion.site/Release-Notes-409ea9cbbf864aa1ad569727545b8f1f"
+            target="_blank">
+            <button class="btn btn-sm btn-outline-secondary" type="button">Release Notes</button>
+          </a>
+
         </div>
       </div>
     </nav>
@@ -193,24 +118,25 @@
 
   <!-- Contenedor del mapa -->
   <div id="map-container">
-    
+
     <div id="map"></div>
   </div>
 
 
-  <!-- Incluye Leaflet JS -->
+  <!-- Incluyo Leaflet JS -->
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
 
-  <script>
+  <script th:inline="javascript">
     // Crea el mapa
     var map = L.map('map');
 
-    // Añade una capa de mapa base de OpenStreetMap
+    
 
 
-    // GeoJSON del servidor (sustituye con tu propio código para obtener el GeoJSON)
-    var geoJsonData = null;
+    // GeoJSON del servidor)
+    var geoJsonData = /*[[${content}]]*/ {};
+
 
     if (geoJsonData && geoJsonData.features && geoJsonData.features.length > 0) {
 
@@ -235,20 +161,20 @@
         color: 'green',
         fillColor: '#00FF00',
         fillOpacity: 0.5,
-        radius: 500 // Puedes ajustar el radio del círculo según tus preferencias
+        radius: 500 // Ajustar el radio del círculo
       }).addTo(map);
 
       var endCircle = L.circle(coordinates[coordinates.length - 1], {
         color: 'red',
         fillColor: '#FF0000',
         fillOpacity: 0.5,
-        radius: 500 // Puedes ajustar el radio del círculo según tus preferencias
+        radius: 500 // Ajustar el radio del círculo 
       }).addTo(map);
 
       // Ajusta la vista del mapa para incluir las coordenadas de la línea
       map.fitBounds(polyline.getBounds());
 
-      // Establece límites de ampliación
+      // Establece límites de ampliacion
       var bounds = L.latLngBounds(coordinates);
       map.setMaxBounds(bounds);
 
@@ -258,8 +184,8 @@
       // Establece el nivel de zoom minimo
       map.setMinZoom(8);
     } else {
-      // Si no hay datos GeoJSON disponibles, centra el mapa en Holanda
-      map.setView([52.3667, 4.8945], 10); // Latitud, Longitud, Zoom (centrado en Ámsterdam, Holanda)
+      // Si no hay datos GeoJSON disponibles, centra el mapa en Amsterdam
+      map.setView([52.3667, 4.8945], 10); // Latitud, Longitud, Zoom 
 
       // Añade la capa de OpenStreetMap al mapa
       L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
@@ -274,13 +200,4 @@
 
 </body>
 
-    
-
 </html>
-
-
-
-
-
-        
-   
