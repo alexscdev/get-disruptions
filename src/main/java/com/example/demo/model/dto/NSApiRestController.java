@@ -58,7 +58,7 @@ public class NSApiRestController {
 			return resultList;
 		} catch (HttpStatusCodeException e) {
 
-			// Manejar cualquier excepción HTTP aquí
+			// Manejar cualquier excepción HTTP
 			System.err.println("Error HTTP: " + e.getStatusCode());
 			System.err.println("Mensaje: " + e.getResponseBodyAsString());
 
@@ -70,12 +70,18 @@ public class NSApiRestController {
 	}
 
 	public Map<String, String> extraerIds(List<Map<String, Object>> list) {
+		
 		Map<String, String> idTituloMap = new HashMap<>();
 
 		for (Map<String, Object> mapa : list) {
 			String id = (String) mapa.get("id");
 			String title = (String) mapa.get("title");
-			idTituloMap.put(id, title);
+			
+			if (id.length()<9) {
+			//	System.out.println("Id limpiado: "+id);
+				idTituloMap.put(id, title);
+			}
+			
 		}
 
 		return idTituloMap;
@@ -84,23 +90,26 @@ public class NSApiRestController {
 	//Ruta por defecto
 	@GetMapping("/")
 	public String sacaGEOJsonDefecto(Model model) {
+		
 
 		// Obtener el mapa de IDs y títulos
-		Map<String, String> idTituloMap = extraerIds(sacaIDDisruptions());
-
-		model.addAttribute("datos", idTituloMap);
+		Map<String, String> idTitulosMap = extraerIds(sacaIDDisruptions());
+	    
+		model.addAttribute("datos", idTitulosMap);
 
 		return "home/index";
 	}
 	
    //Ruta con indice para mostrar vias
 	@GetMapping("/{index}")
-	public String sacaGEOJson(@PathVariable(required = false) Integer index, Model model) {
+	public String sacaGEOJson(@PathVariable(required = false) String index, Model model) {
+
 
 		// Obtener el mapa de IDs y títulos
-		Map<String, String> idTituloMap = extraerIds(sacaIDDisruptions());
+		Map<String, String> idTitulosMap = extraerIds(sacaIDDisruptions());
+	   
 
-		model.addAttribute("datos", idTituloMap);
+		model.addAttribute("datos", idTitulosMap);
 
 		String apiUrl;
 
