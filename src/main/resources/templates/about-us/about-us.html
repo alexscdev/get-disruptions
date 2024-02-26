@@ -72,7 +72,7 @@
   <link rel="stylesheet" href="assets/css/styles.css" />
 
 
-  <title>Get Disruptions</title>
+  <title>About Us - Get Disruptions</title>
 </head>
 
 <body>
@@ -121,83 +121,12 @@
     </nav>
   </header>
 
-  <!-- Contenedor del mapa -->
-  <div id="map-container">
-
-    <div id="map"></div>
+  <!-- Contenido de la página About Us -->
+  <div class="container mt-5">
+    <h1>About Us</h1>
+    <p>We are Get Disruptions, a team dedicated to providing you with up-to-date information about train disruptions in the Netherlands. Our mission is to help you navigate through any inconveniences caused by disruptions in the train services.</p>
+    <p>Feel free to contact us if you have any questions or suggestions!</p>
   </div>
-
-
-  <!-- Incluyo Leaflet JS -->
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-
-
-  <script th:inline="javascript">
-    // Crea el mapa
-    var map = L.map('map');
-
-    
-
-
-    // GeoJSON del servidor)
-    var geoJsonData = /*[[${content}]]*/ {};
-
-
-    if (geoJsonData && geoJsonData.features && geoJsonData.features.length > 0) {
-
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-      }).addTo(map);
-
-
-      // Obtiene las coordenadas de la primera feature
-      var coordinates = geoJsonData.features[0].geometry.coordinates[0];
-
-      // Invierte las coordenadas para que Leaflet las interprete correctamente
-      coordinates = coordinates.map(function (coord) {
-        return [coord[1], coord[0]];
-      });
-
-      // Agrega la línea al mapa
-      var polyline = L.polyline(coordinates, { color: 'blue', weight: 3 }).addTo(map);
-
-      // Añade círculos al principio y al final de la línea
-      var startCircle = L.circle(coordinates[0], {
-        color: 'green',
-        fillColor: '#00FF00',
-        fillOpacity: 0.5,
-        radius: 500 // Ajustar el radio del círculo
-      }).addTo(map);
-
-      var endCircle = L.circle(coordinates[coordinates.length - 1], {
-        color: 'red',
-        fillColor: '#FF0000',
-        fillOpacity: 0.5,
-        radius: 500 // Ajustar el radio del círculo 
-      }).addTo(map);
-
-      // Ajusta la vista del mapa para incluir las coordenadas de la línea
-      map.fitBounds(polyline.getBounds());
-
-      // Establece límites de ampliacion
-      var bounds = L.latLngBounds(coordinates);
-      map.setMaxBounds(bounds);
-
-      // Establece el nivel de zoom máximo
-      map.setMaxZoom(11);
-
-      // Establece el nivel de zoom minimo
-      map.setMinZoom(8);
-    } else {
-      // Si no hay datos GeoJSON disponibles, centra el mapa en Amsterdam
-      map.setView([52.3667, 4.8945], 10); // Latitud, Longitud, Zoom 
-
-      // Añade la capa de OpenStreetMap al mapa
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-      }).addTo(map);
-    }
-  </script>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"

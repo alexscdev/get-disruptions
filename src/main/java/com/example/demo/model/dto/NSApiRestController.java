@@ -30,8 +30,15 @@ public class NSApiRestController {
 	private RestTemplate restTemplate;
 	
 	String subscriptionKey = SubscriptionKey.subscriptionKey;
+	
 
 	List<String> titles = new ArrayList<>();
+	
+	@GetMapping("/about-us")
+	public String muestraAbout() {
+		
+		return "about-us/about-us";
+	}
 
 	public List<Map<String, Object>> sacaIDDisruptions() {
 		String apiUrl = "https://gateway.apiportal.ns.nl/reisinformatie-api/api/v3/disruptions?isActive=true";
