@@ -118,6 +118,7 @@
               target="_blank">
               <button class="btn btn-sm btn-outline-secondary" type="button">About us</button>
             </a>
+            <button id="changeLayerButton">Cambiar Capa</button>
           </div>
 
         </div>
@@ -151,17 +152,74 @@
     // Define la capa base por defecto
     var defaultBaseLayer = baseMaps["Blanco y Negro"];
 
-    // Crea el mapa con la capa por defecto
-    var map = L.map('map', {
-      layers: [defaultBaseLayer]
-    });
+
+    function getCookie(cookieName) {
+        
+        var cookies = document.cookie.split(';');
+
+        
+        for (var i = 0; i < cookies.length; i++) {
+          var cookie = cookies[i].trim();
+          
+          if (cookie.indexOf(cookieName + '=') === 0) {
+            
+            return cookie.substring(cookieName.length + 1, cookie.length);
+          }
+        }
+
+        
+        return null;
+      }
+
+      
+        var valorCookie = getCookie("defaultBaseLayer");
+        if (valorCookie !== null) {
+          console.log("Valor de la cookie:", valorCookie);
+          defaultBaseLayer = baseMaps[valorCookie];
+        } else {
+          console.log("La cookie no se encontró.");
+        }
+
+
+  var changeLayerButton = document.getElementById('changeLayerButton');
+
+
+  // Crea el mapa con la capa por defecto
+  var map = L.map('map', {
+    layers: [defaultBaseLayer]
+  });
+
+  // Agrega un controlador de eventos para el clic en el botón
+    changeLayerButton.addEventListener('click', function () {
+    // Por ejemplo, cambia entre dos capas base predefinidas
+    if (map.hasLayer(baseMaps["Color"])) {
+      map.removeLayer(baseMaps["Color"]);
+      baseMaps["Blanco y Negro"].addTo(map);
+      document.cookie = "defaultBaseLayer=Blanco y Negro";
+      
+    } else {
+      map.removeLayer(baseMaps["Blanco y Negro"]);
+      baseMaps["Color"].addTo(map);
+      document.cookie = "defaultBaseLayer=Color";
+    }
+  });
+
+    
 
     // Añade el control de capas al mapa y envía el objeto baseMaps completo a la URL
-    var layerControl = L.control.layers(baseMaps).addTo(map);
+    // var layerControl = L.control.layers(baseMaps).addTo(map);
+    
 
+      
 
 
 ////////////////////
+
+
+
+
+
+///////////////////
 
 
 
