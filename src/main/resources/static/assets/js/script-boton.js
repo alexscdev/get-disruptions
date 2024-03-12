@@ -12,13 +12,7 @@ icon.setAttribute('aria-hidden', 'true');
 // Agrega el icono al botón
 button.appendChild(icon);
 
-// Crea el texto
-var textSpan = document.createElement('span');
-textSpan.textContent = 'Cambiar capa';
-textSpan.style.marginLeft = '5px'; 
 
-// Agrega el texto al botón
-button.appendChild(textSpan);
 
 // Agrega el botón al contenedor del mapa
 map.getContainer().appendChild(button);
