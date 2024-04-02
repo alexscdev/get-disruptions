@@ -52,6 +52,7 @@
 
   <title>Get Disruptions</title>
 </head>
+
 <body>
   <header>
     <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
@@ -99,6 +100,15 @@
   <div id="map-container">
     <div id="map">
     </div>
+
+    <!-- Ventana flotante -->
+    <div id="popup" class="popup">
+      <p>El atributo 'datosExtra' contiene datos:</p>
+      <ul>
+        <li th:each="dato : ${datosExtra}" th:text="${dato}">Dato</li>
+      </ul>
+    </div>
+
   </div>
 
   <!-- Incluyo Leaflet JS -->
@@ -147,15 +157,15 @@
         return [coord[1], coord[0]];
       });
 
-      // Agrega la línea al mapa
+      // Agrega la linea al mapa
       var polyline = L.polyline(coordinates, { color: 'blue', weight: 3 }).addTo(map);
 
-      // Añade círculos al principio y al final de la línea
+      // Añade circulos al principio y al final de la linea
       var startCircle = L.circle(coordinates[0], {
         color: 'green',
         fillColor: '#00FF00',
         fillOpacity: 0.5,
-        radius: 500 
+        radius: 500
       }).addTo(map);
 
       var endCircle = L.circle(coordinates[coordinates.length - 1], {
@@ -165,22 +175,40 @@
         radius: 500
       }).addTo(map);
 
-      // Ajusta la vista del mapa para incluir las coordenadas de la línea
+      // Ajusta la vista del mapa para incluir las coordenadas de la linea
       map.fitBounds(polyline.getBounds());
 
       // Establece límites de ampliación
       var bounds = L.latLngBounds(coordinates);
       map.setMaxBounds(bounds);
 
-      // Establece el nivel de zoom máximo
+      // Establece el nivel de zoom maximo
       map.setMaxZoom(11);
 
-      // Establece el nivel de zoom mínimo
+      // Establece el nivel de zoom minimo
       map.setMinZoom(8);
+
+      // Muestra u ocultar la ventana flotante para la informacion adicional
+      map.on('click', function (e) {
+        togglePopup(e.latlng);
+      });
+
+      function togglePopup(latlng) {
+        var popup = document.getElementById('popup');
+        if (popup.style.display === 'none') {
+          popup.style.display = 'block';
+          popup.style.left = latlng.lng + 'px';
+          popup.style.top = latlng.lat + 'px';
+        } else {
+          popup.style.display = 'none';
+        }
+      }
+
     } else {
       // Si no hay datos GeoJSON disponibles, centra el mapa en Amsterdam
       map.setView([52.3667, 4.8945], 10); // Latitud, Longitud, Zoom 
     }
+
   </script>
 
   <script src="assets/js/script-boton.js" th:inline="javascript"></script>

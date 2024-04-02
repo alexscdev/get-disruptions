@@ -32,6 +32,8 @@ public class NSApiRestController {
 	String subscriptionKey = SubscriptionKey.subscriptionKey;
 
 	List<String> titles = new ArrayList<>();
+	
+	Map<String, String> listaDatosId = new HashMap<>();
 
 	@GetMapping("/about-us")
 	public String muestraAbout() {
@@ -83,7 +85,7 @@ public class NSApiRestController {
 		Map<String, String> idTituloMap = new HashMap<>();
 		
 		
-		Map<String, String> listaDatosId = new HashMap<>();
+		
 		
 
 		for (Map<String, Object> mapa : list) {
@@ -190,6 +192,7 @@ public class NSApiRestController {
 		Map<String, String> idTitulosMap = extraerIdsCompletos(sacaIDDisruptions());
 
 		model.addAttribute("datos", idTitulosMap);
+		model.addAttribute("datosExtra", listaDatosId);
 
 		String apiUrl;
 		String indexString = String.valueOf(index);

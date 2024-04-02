@@ -28,3 +28,37 @@
   right: 10px;
   z-index: 1000;
 }
+
+
+.popup {
+  display: none;
+  /* La ventana flotante está oculta por defecto */
+  position: absolute;
+  /* Posicionamiento absoluto */
+  background-color: white;
+  /* Fondo blanco */
+  border: 1px solid #ccc;
+  /* Borde gris */
+  padding: 10px;
+  /* Espaciado interno */
+  z-index: 1000;
+  /* Z-index alto para asegurar que esté por encima de otros elementos */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  /* Sombra */
+  max-width: 300px;
+  /* Ancho máximo de la ventana flotante */
+}
+
+.popup p {
+  margin-bottom: 10px;
+}
+
+.popup ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.popup ul li {
+  margin-bottom: 5px;
+}
