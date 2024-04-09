@@ -100,16 +100,16 @@
   <div id="map-container">
     <div id="map">
     </div>
-
-    <!-- Ventana flotante -->
-    <div id="popup" class="popup">
-      <p>El atributo 'datosExtra' contiene datos:</p>
-      <ul>
-        <li th:each="dato : ${datosExtra}" th:text="${dato}">Dato</li>
+    <div id="popup" class="popup bg-dark text-light p-4 rounded">
+      <p class="font-weight-bold">El atributo 'datosExtra' contiene datos:</p>
+      <ul class="list-group">
+        <li th:each="dato : ${datosExtra}" class="list-group-item bg-dark border-light text-light" th:text="${dato}">
+          Dato
+        </li>
       </ul>
     </div>
-
   </div>
+
 
   <!-- Incluyo Leaflet JS -->
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
@@ -188,30 +188,34 @@
       // Establece el nivel de zoom minimo
       map.setMinZoom(8);
 
-      // Muestra u ocultar la ventana flotante para la informacion adicional
-      map.on('click', function (e) {
-        togglePopup(e.latlng);
-      });
 
-      function togglePopup(latlng) {
-        var popup = document.getElementById('popup');
-        if (popup.style.display === 'none') {
-          popup.style.display = 'block';
-          popup.style.left = latlng.lng + 'px';
-          popup.style.top = latlng.lat + 'px';
-        } else {
-          popup.style.display = 'none';
-        }
-      }
+
+
+
+
+      // map.on('click', function (e) {
+      //   togglePopup(e.latlng);
+      // });
+
+      // function togglePopup(latlng) {
+      //   var popup = document.getElementById('popup');
+      //   if (popup.style.display === 'none') {
+      //     popup.style.display = 'block';
+      //     popup.style.left = latlng.lng + 'px';
+      //     popup.style.top = latlng.lat + 'px';
+      //   } else {
+      //     popup.style.display = 'none';
+      //   }
+      // }
 
     } else {
       // Si no hay datos GeoJSON disponibles, centra el mapa en Amsterdam
       map.setView([52.3667, 4.8945], 10); // Latitud, Longitud, Zoom 
     }
-
   </script>
 
   <script src="assets/js/script-boton.js" th:inline="javascript"></script>
+  <script src="assets/js/popup-info.js" th:inline="javascript"></script>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"

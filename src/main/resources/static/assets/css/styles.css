@@ -1,6 +1,6 @@
 #map {
 	width: 100vw; 
-    height: 100vh; 
+  height: 100vh; 
   background-color: #f5f5f5;
   border: 1px solid #ccc;
   width: 100%;
@@ -29,24 +29,21 @@
   z-index: 1000;
 }
 
+#infoCustomButton {
+  position: relative;
+  top: 10px;
+  right: 10px;
+  z-index: 1000;
+}
 
 .popup {
   display: none;
-  /* La ventana flotante está oculta por defecto */
   position: absolute;
-  /* Posicionamiento absoluto */
-  background-color: white;
-  /* Fondo blanco */
   border: 1px solid #ccc;
-  /* Borde gris */
-  padding: 10px;
-  /* Espaciado interno */
   z-index: 1000;
-  /* Z-index alto para asegurar que esté por encima de otros elementos */
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  /* Sombra */
   max-width: 300px;
-  /* Ancho máximo de la ventana flotante */
+  margin-top: 100px;
 }
 
 .popup p {
