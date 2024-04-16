@@ -101,15 +101,34 @@
     <div id="map">
     </div>
     <div id="popup" class="popup bg-dark text-light p-4 rounded">
-      <p class="font-weight-bold">El atributo 'datosExtra' contiene datos:</p>
+      <!-- <p class="font-weight-bold">El atributo 'datosExtra' contiene datos:</p>
       <ul class="list-group">
-        <li th:each="dato : ${datosExtra}" class="list-group-item bg-dark border-light text-light" th:text="${dato}">
-          Dato
+        <li th:each="dato : ${datosExtra}" class="list-group-item bg-dark border-light text-light" th:text="${dato.value}">Dato
         </li>
-      </ul>
+      </ul> -->
+
+
+      <p class="font-weight-bold text-center" th:text="${tipo}"></p>
+            <ul class="list-group">
+              <li class="list-group-item bg-dark border-light text-light text-center"><strong>Descripcion</strong>
+              </li>
+              <li th:text="${situationLabel}" class="list-group-item bg-dark border-light text-light">
+              </li>
+              </ul>
+
+              <ul class="list-group">
+                <li class="list-group-item bg-dark border-light text-light text-center"><strong>Causa</strong>
+                </li>
+                <li th:text="${#strings.capitalize(causeLabel)}" class="list-group-item bg-dark border-light text-light">
+                </li>
+              </ul>
     </div>
   </div>
 
+  <footer style="position: absolute; bottom: 0; width: 100%; text-align: center; color: gray;">
+    <p>A product of <a href="https://www.theworriedcompany.com" target="_blank" style="color: gray">The Worried
+        Company</a></p>
+  </footer>
 
   <!-- Incluyo Leaflet JS -->
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
@@ -188,25 +207,6 @@
       // Establece el nivel de zoom minimo
       map.setMinZoom(8);
 
-
-
-
-
-
-      // map.on('click', function (e) {
-      //   togglePopup(e.latlng);
-      // });
-
-      // function togglePopup(latlng) {
-      //   var popup = document.getElementById('popup');
-      //   if (popup.style.display === 'none') {
-      //     popup.style.display = 'block';
-      //     popup.style.left = latlng.lng + 'px';
-      //     popup.style.top = latlng.lat + 'px';
-      //   } else {
-      //     popup.style.display = 'none';
-      //   }
-      // }
 
     } else {
       // Si no hay datos GeoJSON disponibles, centra el mapa en Amsterdam

@@ -31,6 +31,8 @@ public class NSApiRestController {
 	@Autowired
 	private RestTemplate restTemplate;
 
+	private Translate traducir = new Translate();
+
 	static String subscriptionKey = SubscriptionKey.NSSubscriptionKey;
 
 	List<String> titles = new ArrayList<>();
@@ -38,6 +40,14 @@ public class NSApiRestController {
 	List<String> listaIndices = new ArrayList<>();
 
 	Map<String, String> listaDatosId = new HashMap<>();
+	
+	// Datos extras
+	String type;
+	String situationLabel;
+	String causeLabel;
+	String description;
+	
+	
 
 	@GetMapping("/about-us")
 	public String muestraAbout() {
@@ -57,7 +67,7 @@ public class NSApiRestController {
 			ResponseEntity<String> responseEntity = restTemplate.exchange(apiUrl, HttpMethod.GET, requestEntity,
 					String.class);
 			String jsonResponse = responseEntity.getBody();
-			// System.out.println(jsonResponse);
+			
 
 			// Convertir el JSON a un Map
 			ObjectMapper objectMapper = new ObjectMapper();
@@ -83,66 +93,66 @@ public class NSApiRestController {
 	}
 
 	// -----------------------------------------
-	public Map<String, String> extraerIdsCompletos(List<Map<String, Object>> list) {
+	public Map<String, String> extraerIdsCompletos(List<Map<String, Object>> list, String index) {
 
 		Map<String, String> idTituloMap = new HashMap<>();
 
 		for (Map<String, Object> mapa : list) {
 			String id = (String) mapa.get("id");
 			String title = (String) mapa.get("title");
-			String type = (String) mapa.get("type");
-			String description = null;
-			Map<String, Object> situation;
-			Map<String, Object> cause;
-			String situationLabel = null;
-			String causeLabel = null;
-			List<Map<String, Object>> publicationSections2 = (ArrayList) mapa.get("publicationSections");
-			List<Map<String, Object>> timespans = (ArrayList) mapa.get("timespans");
+			String typeIngles = (String) mapa.get("type");
 
-			// System.out.println("id: " + id); -------------------------------------
-			// System.out.println("type: " + type); ---------------------------------
+			if (!typeIngles.equalsIgnoreCase("CALAMITY") && id.equalsIgnoreCase(index)) {
 
-			for (Map<String, Object> section : publicationSections2) {
-				Map<String, Object> consequence = (Map<String, Object>) section.get("consequence");
+//				String description = null;
+				Map<String, Object> situation;
+				Map<String, Object> cause;
+//				String situationLabel = null;
+//				String causeLabel = null;
+				List<Map<String, Object>> publicationSections = (ArrayList) mapa.get("publicationSections");
 
-				description = (String) consequence.get("description");
+				List<Map<String, Object>> timespans = (ArrayList) mapa.get("timespans");
 
-				// Imprimir la descripción
-				// System.out.println("Descripciónnn: " + description);
-				// -------------------------------
+				for (Map<String, Object> section : publicationSections) {
+					Map<String, Object> consequence = (Map<String, Object>) section.get("consequence");
+
+					description = (String) consequence.get("description");
+
+				}
+
+				for (Map<String, Object> section : timespans) {
+
+					situation = (Map<String, Object>) section.get("situation");
+
+					cause = (Map<String, Object>) section.get("cause");
+
+					situationLabel = (String) situation.get("label");
+
+					causeLabel = (String) cause.get("label");
+
+				}
+
+				if (id.length() < 9) {
+					
+					idTituloMap.put(id, title);
+					listaIndices.add(id);
+					//----------
+					type=traducir.translate(typeIngles);
+					situationLabel= traducir.translate(situationLabel);
+					causeLabel=traducir.translate(causeLabel);
+//					description=traducir.translate(description);
+					//-----------------------------------
+				//	listaDatosId.put("situationLabel", traducir.translate(situationLabel));
+				//	listaDatosId.put("type", traducir.translate(type));
+				//	listaDatosId.put("causeLabel", traducir.translate(causeLabel));
+				//	listaDatosId.put("description", traducir.translate(description));
+					//-----------------------------------
+				}
 			}
-
-			for (Map<String, Object> section : timespans) {
-
-				situation = (Map<String, Object>) section.get("situation");
-
-				cause = (Map<String, Object>) section.get("cause");
-
-				situationLabel = (String) situation.get("label");
-
-				causeLabel = (String) cause.get("label");
-
-				// Imprimir la descripción
-				// System.out.println("Situatuion Label: " + situationLabel);
-				// ----------------------------------
-				// Imprimir la descripción
-				// System.out.println("Cause Label: " + causeLabel);
-				// ---------------------------------------
-			}
-			
-			Translate instancia = new Translate();
-	        
-	        
-	       
-
 			if (id.length() < 9) {
-				// System.out.println("Id limpiado: "+id);
+				
 				idTituloMap.put(id, title);
 				listaIndices.add(id);
-				listaDatosId.put("situationLabel",  instancia.translate(situationLabel));
-				listaDatosId.put("type", instancia.translate(type));
-			    listaDatosId.put("causeLabel", instancia.translate(causeLabel));
-  		    	listaDatosId.put("description", instancia.translate(description));
 			}
 
 		}
@@ -173,17 +183,9 @@ public class NSApiRestController {
 
 	public boolean validarIndice(String index, List<String> lista) {
 
-		System.out.println(lista.get(0));
+		if (lista.contains(index))
+			return true;
 
-		for (String indice : lista) {
-			System.out.println(indice);
-			if (index.equals(indice)) {
-				System.out.println("el indice conincidio");
-				return true;
-
-			}
-		}
-		System.out.println("El Indice se comprobo pero no ha coincidido");
 		return false;
 	}
 
@@ -192,7 +194,7 @@ public class NSApiRestController {
 	public String sacaGEOJsonDefecto(Model model) {
 
 		// Obtener el mapa de IDs y títulos
-		Map<String, String> idTitulosMap = extraerIdsCompletos(sacaIDDisruptions());
+		Map<String, String> idTitulosMap = extraerIds(sacaIDDisruptions());
 
 		model.addAttribute("datos", idTitulosMap);
 
@@ -204,12 +206,17 @@ public class NSApiRestController {
 	public String sacaGEOJson(@PathVariable(required = false) String index, Model model) {
 
 		// Obtener el mapa de IDs y títulos
-		Map<String, String> idTitulosMap = extraerIdsCompletos(sacaIDDisruptions());
+		Map<String, String> idTitulosMap = extraerIdsCompletos(sacaIDDisruptions(), index);
 
 		if (index != null && validarIndice(index, listaIndices)) {
 
 			model.addAttribute("datos", idTitulosMap);
 			model.addAttribute("datosExtra", listaDatosId);
+			
+			
+			model.addAttribute("tipo", type);
+			model.addAttribute("situationLabel", situationLabel);
+			model.addAttribute("causeLabel", causeLabel);
 
 			String apiUrl;
 
@@ -238,8 +245,8 @@ public class NSApiRestController {
 
 					// Convertir el JSON a un Map
 
-//            ObjectMapper objectMapper = new ObjectMapper();
-//            Map<String, Object> resultMap = objectMapper.readValue(jsonResponse, new TypeReference<Map<String,Object>>() {});
+     //            ObjectMapper objectMapper = new ObjectMapper();
+    //            Map<String, Object> resultMap = objectMapper.readValue(jsonResponse, new TypeReference<Map<String,Object>>() {});
 
 					// Imprimir el Map resultante
 					// System.out.println(resultMap);
