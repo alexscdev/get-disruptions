@@ -20,7 +20,7 @@ map.getContainer().appendChild(infoButton);
 var currentURL = window.location.href;
 
 
-if (currentURL.includes("http://localhost:8080/") && currentURL !== "http://localhost:8080/") {
+if (currentURL.includes(("https://www.getdisruptions.com/"| "https://getdisruptions.com/")) && currentURL !== ("https://www.getdisruptions.com/" | "https://getdisruptions.com/")) {
 
     infoButton.addEventListener('click', function () {
         var infoButtonPosition = infoButton.getBoundingClientRect();
