@@ -23,16 +23,6 @@
 }
 
 #customButton {
-  position: relative;
-  top: 10px;
-  right: 10px;
-  z-index: 1000;
-}
-
-#infoCustomButton {
-  position: relative;
-  top: 10px;
-  right: 10px;
   z-index: 1000;
 }
 

@@ -101,12 +101,6 @@
     <div id="map">
     </div>
     <div id="popup" class="popup bg-dark text-light p-4 rounded">
-      <!-- <p class="font-weight-bold">El atributo 'datosExtra' contiene datos:</p>
-      <ul class="list-group">
-        <li th:each="dato : ${datosExtra}" class="list-group-item bg-dark border-light text-light" th:text="${dato.value}">Dato
-        </li>
-      </ul> -->
-
 
       <p class="font-weight-bold text-center" th:text="${tipo}"></p>
             <ul class="list-group">
@@ -130,14 +124,14 @@
         Company</a></p>
   </footer>
 
-  <!-- Incluyo Leaflet JS -->
+  
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script src="assets/js/script.js" th:inline="javascript"></script>
 
   <script th:inline="javascript">
 
 
-    // Define las diferentes capas disponibles del mapa
+    
     var baseMaps = {
       "Color": L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
@@ -147,7 +141,7 @@
       })
     };
 
-    // Define la capa base por defecto
+    
     var defaultBaseLayer = baseMaps["Blanco y Negro"];
 
     var valorCookie = getCookie("defaultBaseLayer");
@@ -158,28 +152,22 @@
       console.log("La cookie no se encontró.");
     }
 
-    // Crea el mapa con la capa por defecto
+    
     var map = L.map('map', {
       layers: [defaultBaseLayer]
     });
 
-
-    // GeoJSON del servidor
     var geoJsonData = /*[[${content}]]*/ {};
     if (geoJsonData && geoJsonData.features && geoJsonData.features.length > 0) {
-      // Obtiene las coordenadas de la primera feature
+      
       var coordinates = geoJsonData.features[0].geometry.coordinates[0];
 
-
-      // Invierte las coordenadas para que Leaflet las interprete correctamente
       coordinates = coordinates.map(function (coord) {
         return [coord[1], coord[0]];
       });
 
-      // Agrega la linea al mapa
       var polyline = L.polyline(coordinates, { color: 'blue', weight: 3 }).addTo(map);
 
-      // Añade circulos al principio y al final de la linea
       var startCircle = L.circle(coordinates[0], {
         color: 'green',
         fillColor: '#00FF00',
@@ -194,22 +182,17 @@
         radius: 500
       }).addTo(map);
 
-      // Ajusta la vista del mapa para incluir las coordenadas de la linea
       map.fitBounds(polyline.getBounds());
 
-      // Establece límites de ampliación
       var bounds = L.latLngBounds(coordinates);
       map.setMaxBounds(bounds);
 
-      // Establece el nivel de zoom maximo
       map.setMaxZoom(11);
 
-      // Establece el nivel de zoom minimo
       map.setMinZoom(8);
 
-
     } else {
-      // Si no hay datos GeoJSON disponibles, centra el mapa en Amsterdam
+
       map.setView([52.3667, 4.8945], 10); // Latitud, Longitud, Zoom 
     }
   </script>
