@@ -15,7 +15,7 @@ public class Translate {
         try {
             String authKey = subscriptionKey; 
             translator = new Translator(authKey);
-            TextResult result = translator.translateText(texto, "nl", "es");
+            TextResult result = translator.translateText(texto, "nl", "en-GB");
             //System.out.println(result.getText());
             return result.getText();
         } catch (Exception e) {
